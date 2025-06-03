@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom"
 import { categoriesItems } from "../../../constants"
 import { myStore } from "../../../store"
 import type { ItemType, CustomItems } from "../../../types"
@@ -11,6 +12,10 @@ const SelectTable = () => {
 
     const customItems: CustomItems = myStore((state) => { return state.customItems as CustomItems })
     const changeItem = myStore((state) => { return state.changeItem })
+    const clickDownload = myStore((state) => { return state.clickDonwload })
+
+
+    const navigate = useNavigate()
 
     return (
         <div className="h-screen flex flex-col " style={{ gap: "50px", marginTop: "50px", alignItems: "center" }}>
@@ -58,7 +63,19 @@ const SelectTable = () => {
 
             </div>
 
+            {/* animate and buttons*/}
             <div>
+                {/* animate */}
+                <div></div>
+
+                {/* buttons */}
+                <div className="flex" style={{ gap: "50px" }}>
+
+                    <button onClick={() => { localStorage.setItem("customItems", JSON.stringify(customItems)) }} style={{ height: "70px", width: "150px" }} className="rounded-lg bg-indigo-500 hover:bg-indigo-600 transition-colors duration-300 text-white font-medium px-4 py-3 pointer-events-auto">Save</button>
+                    <button onClick={() => { clickDownload() }} style={{ height: "70px", width: "150px" }} className="rounded-lg bg-indigo-500 hover:bg-indigo-600 transition-colors duration-300 text-white font-medium px-4 py-3 pointer-events-auto">Download Character</button>
+                    <button onClick={() => { navigate("/lobby") }} style={{ height: "70px", width: "150px" }} className="rounded-lg bg-indigo-500 hover:bg-indigo-600 transition-colors duration-300 text-white font-medium px-4 py-3 pointer-events-auto">Go to lobby</button>
+
+                </div>
 
             </div>
 

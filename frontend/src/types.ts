@@ -21,7 +21,9 @@ export interface MixCharacterState {
     customItems: object
     changeItem: (item: Item) => void,
     categoryTypeSelected: number,
-    changeTypeSelected: (index: number) => void
+    changeTypeSelected: (index: number) => void,
+    download: number,
+    clickDonwload: () => void
 }
 
 export interface CustomItemsIgnore {

@@ -2,7 +2,10 @@ import { create, type StateCreator } from 'zustand'
 import { categoriesItems } from './constants'
 import type { MixCharacterState, CustomItems, Item, ItemType, CustomItemsFull } from './types'
 
-
+let customItemsLocal: CustomItems | null
+if (localStorage.getItem("customItems")) {
+    customItemsLocal = JSON.parse(localStorage.getItem("customItems") as string)
+}
 
 let initValueCustomItems: CustomItems = {
     Bottom: categoriesItems.Bottom[0],
@@ -26,7 +29,8 @@ let initValueCustomItems: CustomItems = {
 
 const createMixCharacterSlice: StateCreator<MixCharacterState> = (set, get, store) => ({
     categoryTypeSelected: 0,
-    customItems: initValueCustomItems,
+    customItems: customItemsLocal || initValueCustomItems,
+    download: 0,
     changeItem: (item: Item) => {
         set((state) => {
 
@@ -53,6 +57,11 @@ const createMixCharacterSlice: StateCreator<MixCharacterState> = (set, get, stor
             categoryTypeSelected: index
         }))
     },
+    clickDonwload: () => {
+        set((state) => ({
+            download: state.download + 1
+        }))
+    }
 })
 
 type Store = MixCharacterState
