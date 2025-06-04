@@ -1,7 +1,8 @@
-import './App.css'
 import { Routes, Route } from "react-router-dom"
 import LoginPage from './pages/common/LoginPage/LoginPage'
 import CharacterMix from './pages/lobby/CharacterMix/CharacterMix'
+import Lobby from "./pages/lobby/Lobby/Lobby"
+
 
 function App() {
 
@@ -10,7 +11,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/chacracterMix" element={<CharacterMix />} />
-
+        <Route path="/lobby" element={<Lobby />} />
       </Routes>
 
     </>

@@ -1,12 +1,11 @@
-import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber"
+import { Canvas, extend, useFrame, useLoader, useThree } from "@react-three/fiber"
 import MainCharacter from "./MainCharacter"
 import SelectTable from "./SelectTable"
 import { AxesHelper, Group, TextureLoader } from "three"
 import React, { useRef } from "react"
 import { Environment } from "@react-three/drei"
-import CameraManager from "./CameraManager"
 import { OrbitControls } from '@react-three/drei'
-import GLBModel from "./Test"
+import AxisHelperWithLabels from "../../../components/Axis/Axis"
 
 
 
@@ -28,22 +27,20 @@ const BackgroundSetter = ({ url }: { url: string }) => {
 
 const CharacterMix = () => {
 
-
     return (
         <div className="h-screen w-screen bg-gradient-to-r from-blue-300 to-green-600 flex justify-between" >
 
             {/*display main character */}
             <div className="h-screen w-2/3" >
 
-                <Canvas camera={{ position: [3, 3, 3], fov: 50 }} style={{ height: "100vh" }} shadows  >
+                <Canvas camera={{ position: [3, 3, 5], fov: 50 }} style={{ height: "100vh" }} shadows  >
                     <Environment preset="sunset" environmentIntensity={0.3} />
-                    <primitive object={new AxesHelper(5)} />
-
+                    {/* <primitive object={new AxesHelper(5)} /> */}
                     <OrbitControls />
 
                     <mesh receiveShadow rotation-x={-Math.PI / 2} position-y={-0.31}>
-                        <planeGeometry args={[100, 100]} />
-                        <meshStandardMaterial color="#333" roughness={0.85} />
+                        <planeGeometry args={[20.7, 20.7]} />
+                        <meshStandardMaterial color="#333" />
                     </mesh>
                     <directionalLight
                         position={[5, 5, 5]}
@@ -62,7 +59,7 @@ const CharacterMix = () => {
                         intensity={8}
                         color={"#3cb1ff"}
                     />
-                    {/* <CameraManager /> */}
+
                     <gridHelper args={[20, 20, 0xff22aa, 0x55ccff]} />
                     <BackgroundSetter url="/images/commonImgs/gacha.png" />
                     <color attach={"background"} args={["#555"]} />
@@ -72,10 +69,6 @@ const CharacterMix = () => {
                     {/* <GLBModel url="./Assets/Outfit.004.glb" /> */}
 
                 </Canvas>
-
-
-
-
             </div>
 
 

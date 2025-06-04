@@ -1,79 +1,109 @@
-import React, { Suspense, useEffect, useRef } from 'react';
-import { SkinnedMesh, Group } from 'three';
-import { useArmature } from './MainSkeleton';
-import Customization from './Customization';
-import { GLTFExporter } from 'three-stdlib';
-import { myStore } from '../../../store';
-import * as THREE from 'three';
-import { useFrame } from '@react-three/fiber';
-import { useAnimations, useFBX } from '@react-three/drei';
+import React, { Suspense, useEffect, useRef } from 'react'
+import { SkinnedMesh, Group } from 'three'
+import { useArmature } from './MainSkeleton'
+import Customization from './Customization'
+import { GLTFExporter } from 'three-stdlib'
+import { myStore } from '../../../store'
+import * as THREE from 'three'
+import { useFrame } from '@react-three/fiber'
+import {
+    Billboard,
+    PerspectiveCamera,
+    PointerLockControls,
+    Text3D,
+    useAnimations,
+    useFBX,
+} from '@react-three/drei'
 
 const MainCharacter: React.FC<React.ComponentProps<'group'>> = (props) => {
-    const group = useRef<Group>(null);
-    const armatureRef = useRef<Group>(null);
+    const group = useRef<Group>(null)
+    const armatureRef = useRef<Group>(null)
 
-    const { nodes } = useArmature();
-    const download = myStore((state) => state.download);
+    const { nodes } = useArmature()
+    const download = myStore((state) => state.download)
 
-    const { animations } = useFBX("/animate/Idle.fbx")
-    const { actions } = useAnimations(animations, group);
+    // Load animation
+    const { animations } = useFBX('/animate/Idle.fbx')
+    const { actions } = useAnimations(animations, group)
+
     useEffect(() => {
         actions['mixamo.com']?.play()
     }, [actions])
 
-    // Xử lý xuất file GLTF
+    // Export GLTF
     function handleDownload() {
-
-
         if (!group.current) {
-            console.log('Group chưa sẵn sàng.');
-            return;
+            console.log('Group chưa sẵn sàng.')
+            return
         }
 
-        const link = document.createElement('a');
-        link.style.display = 'none';
-        document.body.appendChild(link);
+        const link = document.createElement('a')
+        link.style.display = 'none'
+        document.body.appendChild(link)
 
         function save(blob: Blob, filename: string) {
-            link.href = URL.createObjectURL(blob);
-            link.download = filename;
-            link.click();
-            document.body.removeChild(link);
+            link.href = URL.createObjectURL(blob)
+            link.download = filename
+            link.click()
+            document.body.removeChild(link)
         }
 
-        const exporter = new GLTFExporter();
+        const exporter = new GLTFExporter()
         exporter.parse(
             group.current as Group,
             (gltf) => {
-                save(
-                    new Blob([gltf as ArrayBuffer], { type: 'application/octet-stream' }),
-                    `avatar.glb`
-                );
+                save(new Blob([gltf as ArrayBuffer], { type: 'application/octet-stream' }), `avatar.glb`)
             },
             (error) => {
-                console.error('Lỗi khi xuất file:', error);
+                console.error('Lỗi khi xuất file:', error)
             },
             { binary: true }
-        );
+        )
     }
 
     useEffect(() => {
         if (download > 0) {
-            handleDownload();
+            handleDownload()
         }
-    }, [download]);
+    }, [download])
+
+    // Camera nhìn vào nhân vật
+    useFrame(({ camera }) => {
+        if (group.current) {
+            camera.lookAt(group.current.position)
+        }
+    })
 
     return (
-        <group ref={group} {...props} scale={0.01} >
+        <group ref={group} {...props} scale={[0.005, 0.005, 0.005]}>
             <group name="Scene">
                 <group name="Armature" ref={armatureRef}>
-                    {/* Thêm các xương gốc vào cảnh */}
+                    {/* Gắn các bone gốc */}
                     {(nodes.Plane as SkinnedMesh).skeleton.bones
-                        .filter(bone => !bone.parent || !(bone.parent instanceof THREE.Bone))
+                        .filter((bone) => !bone.parent || !(bone.parent instanceof THREE.Bone))
                         .map((bone, index) => (
                             <primitive key={index} object={bone} />
                         ))}
-                    <Suspense>
+
+                    {/* Text nổi tên người chơi */}
+                    <Billboard>
+                        <Text3D
+                            font="/fonts/typeface.json"
+                            size={50}
+                            height={0.5}
+                            curveSegments={12}
+                            bevelEnabled
+                            bevelThickness={0.03}
+                            bevelSize={0.02}
+                            bevelSegments={5}
+                            position={[-70, 250, 0]}
+                        >
+                            YOU
+                            <meshStandardMaterial color="orange" />
+                        </Text3D>
+                    </Billboard>
+
+                    <Suspense fallback={null}>
                         <skinnedMesh
                             name="Plane"
                             geometry={(nodes.Plane as SkinnedMesh).geometry}
@@ -85,8 +115,7 @@ const MainCharacter: React.FC<React.ComponentProps<'group'>> = (props) => {
                 </group>
             </group>
         </group>
+    )
+}
 
-    );
-};
-
-export default MainCharacter;
+export default MainCharacter

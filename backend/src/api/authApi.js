@@ -1,6 +1,6 @@
-const api = require("express").Router()
+const authApi = require("express").Router()
 
-api.get("/", (req, res) => {
+authApi.get("/", (req, res) => {
     const forwardedIp = req.headers['x-forwarded-for'] || req.ip
     res.cookie("test", "test")
     res.status(200).json(
@@ -10,4 +10,9 @@ api.get("/", (req, res) => {
     )
 })
 
-module.exports = { api }
+
+//auth
+// authApi.post()
+
+
+module.exports = { authApi }
