@@ -1,0 +1,9 @@
+-statistic : api/statistic
+
+
+
+-chuc nang chinh : xu ly cac yeu cau chung chung chung lien quan den query data , update data
+
+
+
+-co the lien quan den toan bo co so du lieu

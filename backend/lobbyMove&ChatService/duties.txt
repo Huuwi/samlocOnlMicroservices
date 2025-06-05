@@ -1,0 +1,11 @@
+cardGame : api/lobby&chat
+
+
+
+chuc nang chinh :
+- xu ly khi player join va out lobby
+-xu ly khi player thuc hien movement trong lobby , xu ly khi user cham vao cac do vat trong lobby
+-xu ly noi dung message : chat tong, chat rieng , chat trong phong choi game
+
+
+co so du lieu : khong dung MySQL , chi dung redis (luu trang thai chuyen dong cua cac user) de tang hieu nang cho ung dung

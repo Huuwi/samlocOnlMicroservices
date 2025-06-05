@@ -1,0 +1,11 @@
+ApiGateWay : /apiGateWay
+
+
+chuc nang chinh :
+
+-thuc hien dieu huong cac api
+-gioi han luu luong truy cap
+
+
+
+-khong su dung co so du lieu , chi dung redis de quan ly

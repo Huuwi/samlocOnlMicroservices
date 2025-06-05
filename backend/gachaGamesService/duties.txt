@@ -1,0 +1,7 @@
+gacha : /api/gacha
+
+
+-chuc nang chinh : thuc hien choi gacha : gacha , tai xiu , xuc sac (logic nhe nhang)
+
+
+-khong ket noi den co so du lieu nao ca

@@ -1,0 +1,13 @@
+cardGame : api/cardGame
+
+
+
+chuc nang chinh :
+- xu ly ghep tran online
+-xu ly tao phong , vao phong , roi phong , huy phong
+-xu ly logic trong game
+
+
+
+
+co so du lieu : khong dung MySQL , chi dung redis de tang hieu nang cho ung dung
