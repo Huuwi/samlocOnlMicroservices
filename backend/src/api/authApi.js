@@ -1,4 +1,5 @@
 const authApi = require("express").Router()
+const authControler = require("../controller/authControler")
 
 authApi.get("/", (req, res) => {
     const forwardedIp = req.headers['x-forwarded-for'] || req.ip
@@ -12,7 +13,7 @@ authApi.get("/", (req, res) => {
 
 
 //auth
-// authApi.post()
+authApi.post("/login", authControler.login)
 
 
 module.exports = { authApi }

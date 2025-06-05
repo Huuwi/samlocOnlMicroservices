@@ -59,6 +59,17 @@ class Connection {
             connection.release();
         }
     }
+    end() {
+        if (this.pool) {
+            this.pool.end((err) => {
+                if (err) {
+                    console.error('Lỗi khi đóng pool:', err);
+                } else {
+                    console.log('Pool đã được đóng và tất cả connection đã bị giải phóng.');
+                }
+            });
+        }
+    }
 
 }
 
