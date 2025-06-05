@@ -1,0 +1,17 @@
+
+*cac chuc nang chinh :
+
+-dang ky , dang nhap : captcha
+-chinh sua thong tin user :
+	+thay doi thong tin tai khoan
+	+thay doi customItems
+-nap tien online
+
+
+
+
+
+*co so du lieu su dung : users , customItems
+-nha ra cac api lien quan den edit user vi du :
+/api/user/increaBalance : de khi service game ket thuc co the goi den service user
+

@@ -1,0 +1,12 @@
+các chức năng :
+
+-xử lý sự kiện movement của các user : services xử lý sự kiện movement o lobby
+
+
+
+
+
+
+
+note :
+-khi vào lobby thì người chơi mới kết nối den socketio

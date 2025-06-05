@@ -1,0 +1,11 @@
+thiết kế cơ sở dữ lieu cho bang user :
+
+
+userId
+username
+password
+nickName
+balance
+customItemsId
+vip
+level

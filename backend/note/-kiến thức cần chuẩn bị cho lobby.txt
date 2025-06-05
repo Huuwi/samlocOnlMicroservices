@@ -1,0 +1,10 @@
+-kiến thức cần chuẩn bị cho lobby
+
+frontend : 
+-làm sao sử dung và tạo map cho model chạy + gan camera: 3
+-tạo animate chạy cho nhân vật : 4
+
+
+backend :
+-dung base server : thiết kế cơ sở dữ liệu dung cho user , tao login , su dung ORM : 1
+-dung base socket io cho client va server : trien khai mo hinh chuan chi cho socket de su dung : 2

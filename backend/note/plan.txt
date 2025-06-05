@@ -1,0 +1,12 @@
+-dang ky , dang nhap
+-giao dien vao dung threejs dieu khien nhan vat di chuyen co cac chuc nang chinh : choi bai, sanh danh vong , gacha, thong tin tai khoan , nap tien
+-
+
+
+
+
+backend : microservices 
+-he thong gacha 1 server rieng
+-he thong choi bai 1 server rieng
+-he thong ghep tran 1 server rieng
+-he thong tin nhan 1 server rieng 
