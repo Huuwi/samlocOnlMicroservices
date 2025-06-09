@@ -6,7 +6,5 @@ các chức năng :
 
 
 
-
-
 note :
 -khi vào lobby thì người chơi mới kết nối den socketio

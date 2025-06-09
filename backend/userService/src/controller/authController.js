@@ -29,14 +29,20 @@ const login = async (req, res) => {
 
         const token = jwt.sign({
             userId: findedUser.userId,
-            nickName: findedUser.nickName
-        }, process.env.JWT_KEY, { expiresIn: 60 * 60 * 24 })
+            nickName: findedUser.nickName,
+            isAdmin: findedUser.isAdmin
+        }, process.env.JWT_ACCESS_KEY, { expiresIn: 60 * 60 * 24 })
 
-        res.cookie("token", token, {})
+        res.cookie("accessToken", token, {})
 
         return res.status(200).json({
             message: "ok",
-            userData: findedUser
+            userData: findedUser,
+            refreshToken: jwt.sign({
+                userId: findedUser.userId,
+                nickName: findedUser.nickName,
+                isAdmin: findedUser.isAdmin
+            }, process.env.JWT_REFRESH_KEY, { expiresIn: 60 * 60 * 24 })
         })
     } catch (error) {
         console.log("have wrong when login : ", error)

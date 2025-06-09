@@ -1,0 +1,47 @@
+docker se gom cac thanh phan co ban chinh :
+
+-docker desktop : chua docker client (bao gom CLI va gui de tuong tac voi dockerDaemon thong qua Api) , docker daemon (docker da) nhu sieu nhan bao gom viec pull , push cac image , chay cac runtime ,...
+-docker hub : kho chua going GitHub , co the su dung de push image cua ban than tu tao len , pull cac image tu docker hub cua nguoi khac ve de su dung
+
+
+cac thanh phan , cac lop nho hon cua docker :
+
+-docker image : giong nhu 1 source sau khi duoc build ra (giong voi dist trong npm run build). docker image bao gom nhieu layer tu thap den cao , cac layer co the ke thua tu nhau de su dung. khi docker image duoc build , moi layer se duoc build ra 1 folder rieng biet. khi nhieu image cung su dung chung 1 layer , docker van chi build ra 1 folder cho moi layer de su dung (co che union filesystem).
+
+-docker container : giong viec su dung lenh npm start voi thu muc dist sau khi duoc build ra. la viec 1 image trong qua trinh khoi dong goi la 1 container chua cac trang thai trong qua trinh chay. docker container chay doc lap isolate , moi docker container giong nhu 1 process rieng biet (moi service giong nhu 1 container)
+
+-docker compose : giong viec 1 file automation build images , giong 1 script de chay dong thoi nhieu images. 
+
+
+-docker file : dung de build image
+
+
+FROM <image> - this specifies the base image that the build will extend. : khoi tao base , ví dụ :FROM node:22.16
+WORKDIR <path> - this instruction specifies the "working directory" or the path in the image where files will be copied and commands will be executed. tạo ra 1 folder ảo (không nhìn thấy duoc trong du an) WORK DIR /app
+COPY <host-path> <image-path> - this instruction tells the builder to copy files from the host and put them into the container image. Copy file của dự án cần thiết sử dung COPY . . để copy toàn bộ file , folder của dự án vào app
+RUN <command> - this instruction tells the builder to run the specified command. lệnh sử dung de build du an vi du : RUN npm i
+ENV <name> <value> - this instruction sets an environment variable that a running container will use. dat cac thuoc tinh ENV cho du an (khong nen su dung vi nguoi chay image co the trich xuat toan bo thong tin). vi du : ENV SECRET_KEY="nguyenhuuduc"
+EXPOSE <port-number> - this instruction sets configuration on the image that indicates a port the image would like to expose. dinh nghia port chay cho truong trinh. vi du : EXPOSE 8000
+
+USER <user-or-uid> - this instruction sets the default user for all subsequent instructions.
+CMD ["<command>", "<arg1>"] - this instruction sets the default command a container using this image will run. su dung de dinh nghia cmd de run du an vi du : CMD ["npm","start"]
+
+
+
+1 vai lenh docker co ban :
+docker build -t <tên-image>:<tag> <đường-dẫn-tới-Dockerfile>   vi du : docker build -t my-app:latest .
+
+show cac images hien co : docker images
+
+chay 1 image : docker run -p PORT:PORT ten_image    vi du :
+docker run -p 8000:8000 my-app:v1
+
+
+xoa 1 image : docker rmi ten_image||id_image
+
+
+
+
+
+
+

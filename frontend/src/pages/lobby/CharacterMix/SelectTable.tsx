@@ -14,7 +14,6 @@ const SelectTable = () => {
     const changeItem = myStore((state) => { return state.changeItem })
     const clickDownload = myStore((state) => { return state.clickDonwload })
 
-
     const navigate = useNavigate()
 
     return (

@@ -26,6 +26,7 @@ export interface MixCharacterState {
     clickDonwload: () => void
 }
 
+
 export interface CustomItemsIgnore {
     Bottom?: string,
     Bow?: string,

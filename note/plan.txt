@@ -6,7 +6,9 @@
 
 
 backend : microservices 
--he thong gacha 1 server rieng
--he thong choi bai 1 server rieng
--he thong ghep tran 1 server rieng
--he thong tin nhan 1 server rieng 
+-he thong gacha 1 server rieng : golang
+-he thong choi bai 1 server rieng : nodejs
+-he thong ghep tran 1 server rieng : golang
+-he thong tin nhan 1 server rieng  : Node.js 
+-hệ thống check profile : render biểu đồ tỷ lệ thắng , thua , .... , render pdf và .csv file : python ??
+-mỗi service se co 1 Dockerfile rieng , build ra image , dung docker compose de auto run nhieu imgae , dung kubernet de quan ly cac images

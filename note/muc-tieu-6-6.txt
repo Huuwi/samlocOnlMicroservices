@@ -1,0 +1,24 @@
+-doc va hieu tai lieu ve message queue , hieu ve rabbit quese va cach trien khai
+-cau truc thu muc , them message queue vao nhung service can thiet
+
+-hoan thien user service
+
+
+
+-dat rbmq cho chuc nang nao??
+
++chuc nang thanh toan online (bao gom ca tao link va xac thuc thanh toan online) : (goi nhieu api ben thu 3 + query db + ma hoa , giai ma rat ton thoi gian)
++tao file pdf : giay chung nhan game thu (query nhieu du lieu tu cac bang , tao pdf mat nhieu thoi gian)
+Client → gửi HTTP request → API Gateway
+
+API Gateway → gọi nội bộ Service A
+
+Service A → đẩy message vào queue
+
+Service A → trả về client: "Đang xử lý" (tao 1 api tren express phia frontend)
+
+Worker xử lý → tạo PDF
+
+Worker gửi lại kết quả cho client qua webhook / email / polling  (tao 1 api tren express phia frontend)
+
++
