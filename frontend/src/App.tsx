@@ -5,6 +5,8 @@ import Lobby from "./pages/lobby/Lobby/Lobby"
 import GachaMachine from "./Test/Test"
 
 function App() {
+  console.log(document.cookie);
+
 
   return (
     <>

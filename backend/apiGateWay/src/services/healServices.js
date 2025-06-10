@@ -1,14 +1,18 @@
 const axios = require("axios");
 const services = require("./services");
-const healTime = 1000 * 20;
+const healTime = 1000 * 5;
 
-const healServices = () => {
+const healInterval = () => {
     setInterval(() => {
         Object.entries(services).forEach(([serviceName, serviceUrls]) => {
             serviceUrls.forEach(async (url) => {
+                // console.log(url + "/api/" + serviceName);
+
                 try {
-                    await axios.get(url + "/api");
-                    const list = globalThis.valueRobin?.[serviceName];
+                    const res = await axios.get(url + "/api/" + serviceName, { timeout: 1000 });
+                    // console.log(res.data);
+
+                    const list = globalThis.services?.[serviceName];
                     if (list) {
                         const index = list.indexOf(url);
                         if (index == -1) {
@@ -16,8 +20,11 @@ const healServices = () => {
                         }
                     }
                 } catch (error) {
-                    console.log(`[HealthCheck] Service died: ${url}`);
-                    const list = globalThis.valueRobin?.[serviceName];
+                    // console.log(error);
+
+                    // console.log(`[HealthCheck] Service died: ${url}`);
+                    const list = globalThis.services?.[serviceName];
+
                     if (list) {
                         const index = list.indexOf(url);
                         if (index !== -1) {
@@ -30,4 +37,4 @@ const healServices = () => {
     }, healTime);
 };
 
-module.exports = healServices;
+module.exports = { healInterval };

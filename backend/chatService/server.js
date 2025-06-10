@@ -1,15 +1,8 @@
 const express = require("express");
 require("dotenv").config({ path: "./.env" });
 const { createServer } = require("http");
-const { authApi } = require("./src/api/authApi.js")
 require('dotenv').config()
-const Connection = require("./src/database/connection.js")
 const configServer = require("./src/config/configServer.js")
-
-globalThis.connection = new Connection()
-globalThis.connection.connect()
-
-
 
 
 const app = express();
@@ -20,8 +13,6 @@ configServer(app)
 
 
 //use API route
-app.use("/api/userService", authApi)
-
 
 
 

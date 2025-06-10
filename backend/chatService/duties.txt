@@ -1,0 +1,4 @@
+/Chat service
+
+
+-xu ly noi dung message : chat tong, chat rieng , chat trong phong choi game

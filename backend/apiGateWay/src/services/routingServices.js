@@ -15,14 +15,25 @@ function roundRobin(serviceName) {
 const routingServices = (app) => { // implement with loadbalancing for each service
 
     Object.keys(services).forEach((serviceName) => {
+
         app.use(`/api/${serviceName}`, createProxyMiddleware({
-            target: roundRobin(serviceName),
+            target: roundRobin(serviceName) + `/api/${serviceName}`,
             changeOrigin: true,
-            ws: true
+            ws: true,
+            pathRewrite: {
+                [`^/api/${serviceName}`]: '',
+            },
+            // router: () => roundRobin(serviceName), // luôn chọn target mới mỗi request
+            onError(err, req, res) {
+                console.error(`Proxy error on ${req.url}:`, err.message);
+                if (!res.headersSent) {
+                    res.writeHead(500, { 'Content-Type': 'application/json' });
+                }
+                res.end(JSON.stringify({ error: 'Proxy error', details: err.message }));
+            }
         }))
+
     })
-
-
 }
 
-module.exports = routingServices
+module.exports = { routingServices }
