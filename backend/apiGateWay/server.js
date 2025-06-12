@@ -6,6 +6,7 @@ const services = require("./src/handleServices/services");
 const { healInterval } = require("./src/handleServices/healServices");
 const { routingServices } = require("./src/handleServices/routingServices");
 const indexMiddleware = require("./src/middleware/index")
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const valueRobin = {};
 Object.keys(services).forEach((serviceName) => {
@@ -17,6 +18,7 @@ globalThis.services = services;
 const app = express();
 
 configServer(app);
+
 
 const httpServer = createServer(app);
 

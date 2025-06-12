@@ -1,8 +1,26 @@
 import { Canvas } from "@react-three/fiber"
 import MainCharacter from "../CharacterMix/MainCharacter"
 import { OrbitControls } from "@react-three/drei"
+import sockets from "../../../socketIo/sockets"
+import { useEffect } from "react"
+
 
 const Lobby = () => {
+
+    useEffect(() => {
+
+        const lobbySocket = sockets.socketLobby.connect()
+
+
+
+        return () => {
+
+        }
+
+    }, [])
+
+
+
     return (
         <div className="relative w-screen h-screen">
             {/* Button layer */}

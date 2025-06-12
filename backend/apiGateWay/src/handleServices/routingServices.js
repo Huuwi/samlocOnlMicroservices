@@ -1,6 +1,9 @@
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const services = require('./services');
 
+const fs = require("fs")
+
+// fs.writeFileSync("./test.json", JSON.stringify(services))
 
 if (!globalThis.valueRobin) globalThis.valueRobin = {};
 
@@ -15,9 +18,42 @@ function roundRobin(serviceName) {
 }
 
 const routingServices = (app) => {
+
     Object.keys(services).forEach((serviceName) => {
-        // HTTP proxy
-        app.use(`/api/${serviceName}`, createProxyMiddleware({
+        const targetBase = roundRobin(serviceName); // GỌI 1 LẦN
+
+        app.use(`/${serviceName}`, createProxyMiddleware({
+            target: targetBase,
+            changeOrigin: true,
+            pathRewrite: {
+                [`^/${serviceName}`]: '',
+            },
+            on: {
+                proxyReq: (proxyReq, req, res) => {
+                    const rewrittenPath = req.url.replace(`/${serviceName}`, '');
+                    console.log(req.url);
+
+
+                    const logData = {
+                        method: req.method,
+                        originalUrl: req.originalUrl,
+                        forwardedTo: `${targetBase}${rewrittenPath}`, // DÙNG targetBase đã chọn
+                        headers: req.headers,
+                    };
+
+                    fs.writeFileSync("./test.txt", JSON.stringify(logData, null, 2));
+                },
+                proxyRes: (proxyRes, req, res) => {
+                    console.log(`[ProxyRes] → ${req.method} ${req.url}`);
+                },
+                error: (err, req, res) => {
+                    console.error(`[ProxyError] ${err.message}`);
+                },
+            },
+        }));
+
+        // WebSocket (nếu có)
+        app.use(`/${serviceName}/api/auth`, createProxyMiddleware({ // add login valid 
             changeOrigin: true,
             ws: true,
             pathRewrite: {
@@ -27,38 +63,9 @@ const routingServices = (app) => {
                 const target = roundRobin(serviceName);
                 return `${target}/api/${serviceName}`;
             },
-            // onProxyReq(proxyReq, req, res) {
-            //     console.log(`[FORWARD] [HTTP] ${req.method} ${req.originalUrl}`);
-            // },
-            // onProxyRes(proxyRes, req, res) {
-            //     console.log(`[RESPONSE] [HTTP] ${req.method} ${req.originalUrl} ← ${proxyRes.statusCode}`);
-            // },
-            // onError(err, req, res) {
-            //     console.error(`HTTP Proxy error [${serviceName}] on ${req.url}:`, err.message);
-            //     if (!res.headersSent) {
-            //         res.writeHead(500, { 'Content-Type': 'application/json' });
-            //         res.end(JSON.stringify({ error: 'API Proxy error', details: err.message }));
-            //     }
-            // }
         }));
-
-        app.use(`/api/${serviceName}/auth`, createProxyMiddleware({
-            changeOrigin: true,
-            ws: true,
-            pathRewrite: {
-                [`^/api/${serviceName}`]: '',
-            },
-            router: () => {
-                const target = roundRobin(serviceName);
-                return `${target}/api/${serviceName}`;
-            },
-        }));
-
-
-
-
-
     });
+
 };
 
 // Trả về proxy mapping để gắn vào upgrade handler

@@ -1,0 +1,18 @@
+{
+    "cardGameService": [
+        "http://localhost:8000",
+        "http://localhost:8000"
+    ],
+    "createFileService": [
+        "http://localhost:8000"
+    ],
+    "gachaGamesService": [
+        "http://localhost:8000"
+    ],
+    "lobbyMoveAndChatService": [
+        "http://localhost:8000"
+    ],
+    "userService": [
+        "http://localhost:8001"
+    ]
+}

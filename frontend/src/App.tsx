@@ -3,17 +3,9 @@ import LoginPage from './pages/auth/LoginPage/LoginPage'
 import CharacterMix from './pages/lobby/CharacterMix/CharacterMix'
 import Lobby from "./pages/lobby/Lobby/Lobby"
 import GachaMachine from "./Test/Test"
-import sockets from "./socketIo/sockets"
-import { useEffect } from "react"
 
 function App() {
 
-  useEffect(() => {
-    sockets.socketChat.connect()
-    return () => {
-      sockets.socketChat.disconnect()
-    }
-  }, [])
 
   return (
     <>

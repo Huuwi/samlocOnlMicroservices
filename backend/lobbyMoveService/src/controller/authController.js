@@ -6,7 +6,6 @@ const jwt = require('jsonwebtoken');
 const login = async (req, res) => {
     try {
         const { username, password } = req.body
-
         if (!username || !password) {
             return res.status(400).json({
                 message: "missing data!"
@@ -30,20 +29,14 @@ const login = async (req, res) => {
 
         const token = jwt.sign({
             userId: findedUser.userId,
-            nickName: findedUser.nickName,
-            isAdmin: findedUser.isAdmin
+            nickName: findedUser.nickName
         }, process.env.JWT_KEY, { expiresIn: 60 * 60 * 24 })
 
-        res.cookie("accessToken", token, {})
+        res.cookie("token", token, {})
 
         return res.status(200).json({
             message: "ok",
-            userData: findedUser,
-            refreshToken: jwt.sign({
-                userId: findedUser.userId,
-                nickName: findedUser.nickName,
-                isAdmin: findedUser.isAdmin
-            }, process.env.JWT_KEY, { expiresIn: 60 * 60 * 24 })
+            userData: findedUser
         })
     } catch (error) {
         console.log("have wrong when login : ", error)

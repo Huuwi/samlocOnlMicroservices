@@ -1,4 +1,5 @@
 const { Server } = require("socket.io");
+const jwt = require("jsonwebtoken")
 
 require("dotenv").config({ path: "./.env" })
 const authMiddleware = require("../middleware/authMiddleWare")
@@ -25,7 +26,7 @@ const configSocketIo = {
         origin: (origin, callback) => {
             const allowedOrigins = [
                 process.env.FONT_END_URL,
-                'http://localhost:1111' <
+                'http://localhost:1111',
                 'http://localhost:5173/'
             ];
 
@@ -53,27 +54,39 @@ class SocketServer extends Server {
 
         this.use((socket, next) => {
             let cookie = parseCookie(socket.request.headers?.cookie)
-            // console.log(cookie);
+            console.log(cookie);
 
             let accessToken = cookie?.accessToken
+
+            console.log(accessToken);
+
 
             if (!accessToken) {
                 next(new Error("not found token"))
                 return
             }
+
+            let decodeAccessToken = jwt.verify(accessToken, process.env.JWT_ACCESS_KEY)
+
             next()
         })
 
         this.on("connect", (socket) => {
             console.log(socket.id + " connected ");
             socket.emit("hello", "hellllo");
-
-            socket.on("disconnect", () => {
-                console.log("discon");
-
-            })
         });
 
+
+        this.on("disconnect", (socket) => {
+            console.log(socket.id + " disconnected ");
+
+            this.emit("hello", "hellllo")
+
+            socket.on("disconnect", () => {
+                console.log(socket.id + " vua ngat ket noi");
+            })
+
+        })
 
     }
 

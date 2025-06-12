@@ -1,7 +1,7 @@
 import SocketClient from "./SocketClient";
 
-const socketLobby = new SocketClient(import.meta.env.VITE_SOCKET_LOBBY_SERVICE_URL);
-const socketChat = new SocketClient("http://localhost:8000");
+const socketLobby = new SocketClient("http://localhost:8002");
+const socketChat = new SocketClient("http://localhost:8001");
 const socketCardGame = new SocketClient(import.meta.env.VITE_SOCKET_CARDGAME_SERVICE_URL);
 
 const sockets = {

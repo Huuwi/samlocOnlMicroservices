@@ -14,11 +14,12 @@ const io = new SocketServer(httpServer);
 globalThis.io = io; // Global
 
 //use API route
+console.log(process.env.PORT);
 
 
 
 // Run the app
-let PORT = process.env.PORT || 8000;
+let PORT = process.env.PORT || 8001;
 httpServer.listen(PORT, () => {
     console.log("httpServer is running on port:", PORT);
 });
