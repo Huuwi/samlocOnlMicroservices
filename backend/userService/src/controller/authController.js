@@ -6,6 +6,10 @@ const jwt = require('jsonwebtoken');
 const login = async (req, res) => {
     try {
         const { username, password } = req.body
+        console.log(username, password);
+        console.log(":  ", process.env.JWT_ACCESS_KEY);
+
+
         if (!username || !password) {
             return res.status(400).json({
                 message: "missing data!"

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Socket.IO Client</title>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+</head>
+
+<body>
+    <h1>Socket.IO Client Test</h1>
+    <input type="text" id="msg" placeholder="Type message..." />
+    <button onclick="sendMessage()">Send</button>
+    <ul id="messages"></ul>
+
+    <script>
+        // Kết nối đến server ở cổng 8000
+        const socket = io('http://localhost:8000', {
+            path: '/socket.io', // nên khớp với server
+            transports: ['websocket', 'polling']
+        });
+
+        socket.on('connect', () => {
+            console.log('Connected to server:', socket.id);
+        });
+
+        socket.on('reply', (data) => {
+            const ul = document.getElementById('messages');
+            const li = document.createElement('li');
+            li.innerText = data;
+            ul.appendChild(li);
+        });
+
+        function sendMessage() {
+            const input = document.getElementById('msg');
+            socket.emit('message', input.value);
+            input.value = '';
+        }
+    </script>
+</body>
+
+</html>

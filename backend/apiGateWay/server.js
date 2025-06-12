@@ -1,34 +1,35 @@
 const express = require("express");
-const configServer = require("./src/config/configServer")
+const configServer = require("./src/config/configServer");
 require("dotenv").config({ path: "./.env" });
 const { createServer } = require("http");
-const services = require("./src/services/services")
-const { healInterval } = require("./src/services/healServices")
-const { routingServices } = require("./src/services/routingServices")
+const services = require("./src/handleServices/services");
+const { healInterval } = require("./src/handleServices/healServices");
+const { routingServices } = require("./src/handleServices/routingServices");
+const indexMiddleware = require("./src/middleware/index")
 
-//init value for roundrobin
-const valueRobin = {}
+const valueRobin = {};
 Object.keys(services).forEach((serviceName) => {
-    valueRobin[serviceName] = 0 // total use service
-})
-globalThis.valueRobin = valueRobin
+    valueRobin[serviceName] = 0;
+});
+globalThis.valueRobin = valueRobin;
+globalThis.services = services;
 
-globalThis.services = services
+const app = express();
 
-
-//init restful
-const app = express()
-
-//configserver restful
-configServer(app)
-routingServices(app)
+configServer(app);
 
 const httpServer = createServer(app);
 
-healInterval()
+
+//midlleware
+// app.use("*", indexMiddleware.rateLimiter)
+
+
+routingServices(app);
+
+
+healInterval();
 
 httpServer.listen(1111, () => {
     console.log("httpServer is running on port:", 1111);
 });
-
-
