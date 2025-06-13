@@ -5,5 +5,5 @@
 -use socketIo to implement : playing card online , chacracter movement online , chat realtime , searching match online
 
 
--tech stack : react (typescript) , threejs , expressjs , docker (to ci/cd),rabbitMQ, MySQL & ORM(sequelize) ,... and some thing ...v...v
+-tech stack : react (typescript) , threejs , expressjs , docker (to ci/cd),rabbitMQ, MySQL & ORM(sequelize) ,... and something ...v...v
 
