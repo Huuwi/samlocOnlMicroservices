@@ -128,7 +128,6 @@ const CharacterController = () => {
     return (
         <>
             <MainCharacter ref={mainCharRef} scale={[0.02, 0.02, 0.02]} />
-
         </>
     );
 };
