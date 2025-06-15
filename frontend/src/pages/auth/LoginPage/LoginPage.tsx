@@ -18,20 +18,22 @@ const LoginPage = () => {
                 withCredentials: true
             }
         )
-
-        console.log(res);
+        return res.data
 
     }
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
         if (!username || !password) {
             setError('Vui lòng điền đầy đủ thông tin');
             return;
         }
 
-        fetchLogin()
-
-        console.log('Đăng nhập với:', username, password);
+        try {
+            let data = await fetchLogin()
+        } catch (error) {
+            alert("login khong thanh cong")
+            return
+        }
         setError('');
     };
 

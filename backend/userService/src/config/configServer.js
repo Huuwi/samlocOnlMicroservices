@@ -3,6 +3,7 @@ var cookieParser = require('cookie-parser')
 
 
 function configServer(app) {
+    app.use(express.json());
     app.use(express.static('./src/public'))
     app.use(
         express.urlencoded({

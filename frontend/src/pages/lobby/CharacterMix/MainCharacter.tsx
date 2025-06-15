@@ -1,4 +1,10 @@
-import React, { Suspense, useEffect, useRef } from 'react'
+import React, {
+    forwardRef,
+    useRef,
+    useEffect,
+    Suspense,
+    useImperativeHandle,
+} from 'react'
 import { SkinnedMesh, Group } from 'three'
 import { useArmature } from './MainSkeleton'
 import Customization from './Customization'
@@ -8,19 +14,21 @@ import * as THREE from 'three'
 import { useFrame } from '@react-three/fiber'
 import {
     Billboard,
-    PerspectiveCamera,
-    PointerLockControls,
     Text3D,
     useAnimations,
     useFBX,
 } from '@react-three/drei'
 
-const MainCharacter: React.FC<React.ComponentProps<'group'>> = (props) => {
+//  Bọc component bằng forwardRef
+const MainCharacter = forwardRef<Group, React.ComponentProps<'group'>>((props, ref) => {
     const group = useRef<Group>(null)
     const armatureRef = useRef<Group>(null)
 
     const { nodes } = useArmature()
     const download = myStore((state) => state.download)
+
+    //  Cho phép ref từ bên ngoài truy cập group nội bộ
+    useImperativeHandle(ref, () => group.current as Group, [])
 
     // Load animation
     const { animations } = useFBX('/animate/Idle.fbx')
@@ -67,15 +75,11 @@ const MainCharacter: React.FC<React.ComponentProps<'group'>> = (props) => {
         }
     }, [download])
 
-    // Camera nhìn vào nhân vật
-    useFrame(({ camera }) => {
-        if (group.current) {
-            camera.lookAt(group.current.position)
-        }
-    })
+
+
 
     return (
-        <group ref={group} {...props} scale={[0.005, 0.005, 0.005]}>
+        <group ref={group} {...props}>
             <group name="Scene">
                 <group name="Armature" ref={armatureRef}>
                     {/* Gắn các bone gốc */}
@@ -85,7 +89,7 @@ const MainCharacter: React.FC<React.ComponentProps<'group'>> = (props) => {
                             <primitive key={index} object={bone} />
                         ))}
 
-                    {/* Text nổi tên người chơi */}
+                    {/* Tên nhân vật */}
                     <Billboard>
                         <Text3D
                             font="/fonts/typeface.json"
@@ -103,6 +107,7 @@ const MainCharacter: React.FC<React.ComponentProps<'group'>> = (props) => {
                         </Text3D>
                     </Billboard>
 
+                    {/* Mesh & đồ */}
                     <Suspense fallback={null}>
                         <skinnedMesh
                             name="Plane"
@@ -116,6 +121,6 @@ const MainCharacter: React.FC<React.ComponentProps<'group'>> = (props) => {
             </group>
         </group>
     )
-}
+})
 
 export default MainCharacter

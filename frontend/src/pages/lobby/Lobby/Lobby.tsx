@@ -1,23 +1,29 @@
-import { Canvas } from "@react-three/fiber"
+import { Canvas, useFrame } from "@react-three/fiber"
 import MainCharacter from "../CharacterMix/MainCharacter"
-import { OrbitControls } from "@react-three/drei"
+import { Environment, OrbitControls } from "@react-three/drei"
 import sockets from "../../../socketIo/sockets"
-import { useEffect } from "react"
+import { Suspense, useEffect, useRef } from "react"
+import Room from "./Room/Room"
+import { Physics, RigidBody } from "@react-three/rapier";
+
+import CharacterController from "./Character/CharacterController"
+// import { PointerLockControls } from '@react-three/drei';
 
 
 const Lobby = () => {
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        const lobbySocket = sockets.socketLobby.connect()
+    //     const lobbySocket = sockets.socketLobby.connect()
 
 
 
-        return () => {
+    //     return () => {
 
-        }
+    //     }
 
-    }, [])
+    // }, [])
+
 
 
 
@@ -43,7 +49,8 @@ const Lobby = () => {
 
             {/* Canvas */}
             <Canvas camera={{ position: [3, 3, 5], fov: 50 }} className="bg-blue-300 z-0" style={{ height: "100vh", width: "100vw" }}>
-                <MainCharacter />
+                {/* <MainCharacter /> */}
+
                 <directionalLight
                     position={[5, 5, 5]}
                     intensity={2.2}
@@ -53,9 +60,23 @@ const Lobby = () => {
                     shadow-bias={-0.0001}
                 />
                 <directionalLight position={[-5, 5, 5]} intensity={0.7} />
-                <directionalLight position={[3, 3, -5]} intensity={6} color={"#ff3b3b"} />
-                <directionalLight position={[-3, 3, -5]} intensity={8} color={"#3cb1ff"} />
-                <OrbitControls />
+                <directionalLight position={[3, 3, -5]} intensity={2} color={"#ff3b3b"} />
+                <directionalLight position={[-3, 3, -5]} intensity={2} color={"#3cb1ff"} />
+
+
+                <Suspense fallback={null}>
+                    <Physics >
+
+                        {/* Đặt đường dẫn đúng tới file .glb */}
+                        <Room url="./room/room.glb" />
+                        <Environment preset="apartment" background />
+                        <CharacterController />
+
+                    </Physics>
+
+                </Suspense>
+
+
             </Canvas>
         </div>
     )

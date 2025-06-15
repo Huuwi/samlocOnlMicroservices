@@ -3,14 +3,22 @@
   "originalUrl": "/userService/api/login",
   "forwardedTo": "http://localhost:8001/api/login",
   "headers": {
-    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0",
-    "cookie": "_octo=GH1.1.2057793995.1748590121; _device_id=cca65ddca2cab61336ced1161ff4b165; saved_user_sessions=110718832%3AXNzRRjZ-0xW1_dBm-pkfh43HqJzZ3hQTUiXWulzm5zH2_B21; user_session=XNzRRjZ-0xW1_dBm-pkfh43HqJzZ3hQTUiXWulzm5zH2_B21; __Host-user_session_same_site=XNzRRjZ-0xW1_dBm-pkfh43HqJzZ3hQTUiXWulzm5zH2_B21; logged_in=yes; dotcom_user=Huuwi; color_mode=%7B%22color_mode%22%3A%22auto%22%2C%22light_theme%22%3A%7B%22name%22%3A%22light%22%2C%22color_mode%22%3A%22light%22%7D%2C%22dark_theme%22%3A%7B%22name%22%3A%22dark%22%2C%22color_mode%22%3A%22dark%22%7D%7D; cpu_bucket=lg; preferred_color_mode=light; tz=America%2FLos_Angeles; _gh_sess=SpuiH2rhEXTOGi1pXPgjtbTUR02XOfvq4SbwxNM7vllNbSJm6OvuGNGZhl0L5zctgd2tp03GIleOwi9UUzQnMB6A01ZqNh6HKSRXuAJPj4o%2Fre3FqUngla5ZpRNJ72QkNY9Yd573JrE7ZBZKFRDx7A43Wd9SVn1xg4XRgYbvpL1vCtpqiMXvKZWpvw1hucwasEN4uyvBidK9slAkaqX4aVJcUr4OT4g%2F%2FaO9M8mh1B1MCHsS101zoEMMk3ftAe6Iit3WTWIfSaGwilXZqmwuBPq9scZ%2ByZhNUiPFgSnNhjBQIj8iT7wobaLjOUFKJWRw5Lgn7lXESNkN8BNuONDLkTtfs8xSAAHd7PykM0JW1dxxwAkbJ6Rxd6mH1ZTYyvm8ZnrfUjv5%2FbPKTu1KRZY3l8j%2FaBWvHtstesHLl1uaq6KPvPaYC6NEk8G423yL0TSlLO0sWT8rlncs0LEB--ltanTNAPsgeZZAz1--ZI1GMOIt7xCYXaesKvwyWA%3D%3D; accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5pY2tOYW1lIjoiYWRtaW4iLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE3NDk3MzUyNDYsImV4cCI6MTc0OTgyMTY0Nn0.p5ihUzDCyGY2Yw5JOieI1lDbWqWIeiQZiJe77tiOrxM; test=test",
-    "accept": "*/*",
-    "postman-token": "1e77879c-e180-4830-8fd7-ff9641e79072",
     "host": "localhost:1111",
-    "accept-encoding": "gzip, deflate, br",
     "connection": "keep-alive",
-    "content-type": "application/x-www-form-urlencoded",
-    "content-length": "41"
+    "content-length": "39",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0",
+    "accept": "application/json, text/plain, */*",
+    "sec-ch-ua": "\"Microsoft Edge\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+    "content-type": "application/json",
+    "sec-ch-ua-mobile": "?0",
+    "origin": "http://localhost:5173",
+    "sec-fetch-site": "same-site",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-dest": "empty",
+    "referer": "http://localhost:5173/",
+    "accept-encoding": "gzip, deflate, br, zstd",
+    "accept-language": "en-US,en;q=0.9",
+    "cookie": "test=test; accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5pY2tOYW1lIjoiYWRtaW4iLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE3NDk3NzMzNzQsImV4cCI6MTc0OTg1OTc3NH0.a9b0j4Q13TuEPsB5qZTGDircjHv_yuLiabeE6gobkcQ"
   }
 }
