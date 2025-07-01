@@ -21,8 +21,6 @@ configServer(app)
 app.use("/api", authApi)
 
 
-
-
 // Run the app
 let PORT = process.env.PORT || 8001;
 httpServer.listen(PORT, () => {

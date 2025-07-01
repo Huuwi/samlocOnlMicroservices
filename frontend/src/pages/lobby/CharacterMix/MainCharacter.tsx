@@ -11,7 +11,6 @@ import Customization from './Customization'
 import { GLTFExporter } from 'three-stdlib'
 import { myStore } from '../../../store'
 import * as THREE from 'three'
-import { useFrame } from '@react-three/fiber'
 import {
     Billboard,
     Text3D,

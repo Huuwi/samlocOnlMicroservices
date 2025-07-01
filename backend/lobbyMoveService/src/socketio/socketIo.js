@@ -51,14 +51,14 @@ class SocketServer extends Server {
 
     constructor(httpServer, config = configSocketIo) {
         super(httpServer, configSocketIo)
-
+        let a = ""
         this.use((socket, next) => {
             let cookie = parseCookie(socket.request.headers?.cookie)
-            console.log(cookie);
+            // console.log(cookie);
 
             let accessToken = cookie?.accessToken
 
-            console.log(accessToken);
+            // console.log(accessToken);
 
 
             if (!accessToken) {

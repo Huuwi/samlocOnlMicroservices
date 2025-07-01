@@ -18,7 +18,7 @@
     "sec-fetch-dest": "empty",
     "referer": "http://localhost:5173/",
     "accept-encoding": "gzip, deflate, br, zstd",
-    "accept-language": "en-US,en;q=0.9",
-    "cookie": "test=test; accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5pY2tOYW1lIjoiYWRtaW4iLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE3NDk3NzMzNzQsImV4cCI6MTc0OTg1OTc3NH0.a9b0j4Q13TuEPsB5qZTGDircjHv_yuLiabeE6gobkcQ"
+    "accept-language": "en-US,en;q=0.9,vi;q=0.8",
+    "cookie": "pma_lang=en; pmaUser-1=ZP%2BHoYCvPjIRKa9ORnSQEXqVNwYSx1QoY0CxOCMKm%2Fs9%2B3Bvf5%2BbxnNMy3U%3D"
   }
 }

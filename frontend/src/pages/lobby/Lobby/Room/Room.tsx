@@ -1,18 +1,42 @@
-// components/RoomModel.tsx
-import React, { Suspense, type JSX } from "react";
+import React, { useMemo } from "react";
 import { useGLTF } from "@react-three/drei";
-import { RigidBody } from "@react-three/rapier";
+import * as THREE from "three";
+import { RigidBody, TrimeshCollider } from "@react-three/rapier";
 
-type ROOM = JSX.IntrinsicElements["group"] & {
-    url: string;
-};
+type RoomProps = { url: string };
 
-const Room: React.FC<ROOM> = ({ url, ...props }) => {
-    const { scene } = useGLTF(url);
+const Room: React.FC<RoomProps> = ({ url }) => {
+    const { scene } = useGLTF(url) as { scene: THREE.Group };
 
-    return <RigidBody type="fixed" colliders="hull">
-        <primitive object={scene} {...props} />;
-    </RigidBody>
+    const colliders = useMemo(() => {
+        const list: THREE.Mesh[] = [];
+        scene.traverse((child) => {
+            if (child instanceof THREE.Mesh && child.name.startsWith("collider_")) {
+                list.push(child);
+                child.visible = false;
+            }
+        });
+        return list;
+    }, [scene]);
+
+    return (
+        <>
+            <primitive object={scene} />
+            {colliders.map((mesh, i) => {
+                const geom = mesh.geometry as THREE.BufferGeometry;
+                const posAttr = geom.attributes.position;
+                const idxAttr = geom.index;
+                if (!posAttr || !idxAttr) return null;
+                const positions = posAttr.array as unknown as number[];
+                const indices = idxAttr.array as unknown as number[];
+                return (
+                    <RigidBody key={i} type="fixed">
+                        <TrimeshCollider args={[positions, indices]} />
+                    </RigidBody>
+                );
+            })}
+        </>
+    );
 };
 
 export default Room;
