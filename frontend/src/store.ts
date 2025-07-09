@@ -2,10 +2,28 @@ import { create, type StateCreator } from 'zustand'
 import { categoriesItems } from './constants'
 import type { MixCharacterState, CustomItems, Item, ItemType, CustomItemsFull } from './types'
 
-let customItemsLocal: CustomItems | null
-if (localStorage.getItem("customItems")) {
-    customItemsLocal = JSON.parse(localStorage.getItem("customItems") as string)
+function getCustomItemLocal(): CustomItems | null {
+    const raw = localStorage.getItem("customItems");
+
+    if (!raw) return null;
+
+    let customItemsLocal: CustomItems | null = JSON.parse(raw);
+
+    if (!customItemsLocal) return null;
+
+    for (let key of Object.keys(customItemsLocal)) {
+        delete customItemsLocal.customItemsId // no problem =)))
+        if (!customItemsLocal[key as keyof CustomItems]) {
+            delete customItemsLocal[key as keyof CustomItems];
+        } else {
+            customItemsLocal[key as keyof CustomItems] = "./Assets/" + customItemsLocal[key as keyof CustomItems]
+        }
+    }
+    return customItemsLocal;
 }
+
+const customItemsLocal = getCustomItemLocal()
+
 
 let initValueCustomItems: CustomItems = {
     Bottom: categoriesItems.Bottom[0],

@@ -1,8 +1,11 @@
 const express = require("express");
-require("dotenv").config({ path: "./.env" });
 const { createServer } = require("http");
-const { authApi } = require("./src/api/authApi.js")
 require('dotenv').config({ path: "./.env" })
+
+
+const authApi = require("./src/api/authApi.js")
+const userApi = require("./src/api/userApi.js")
+
 const Connection = require("./src/database/connection.js")
 const configServer = require("./src/config/configServer.js")
 
@@ -19,6 +22,7 @@ configServer(app)
 
 //use API route
 app.use("/api", authApi)
+app.use("/api", userApi)
 
 
 // Run the app

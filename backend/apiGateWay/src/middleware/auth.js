@@ -2,17 +2,19 @@ const jwt = require("jsonwebtoken")
 
 const checkUserToken = async (req, res, next) => {
 
+
     const { accessToken } = req.cookies
 
     try {
         let decodeAccessToken = jwt.verify(accessToken, process.env.JWT_ACCESS_KEY)
-        req.decodeAccessToken = decodeAccessToken
+        req["headers"]["X-decode"] = JSON.stringify(decodeAccessToken)
         next()
     } catch (error) {
         console.log("fail to verifyAccessToken : ", error);
         res.status(400).json({
-            message: "unauthorized!"
+            message: "unauthorized"
         })
+        // next()
     }
 }
 

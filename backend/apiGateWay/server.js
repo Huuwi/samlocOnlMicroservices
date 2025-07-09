@@ -24,12 +24,11 @@ const httpServer = createServer(app);
 
 
 //midlleware
-// app.use("*", indexMiddleware.rateLimiter)
+app.use(indexMiddleware.authMiddleware.checkUserToken)
 
 
+//services
 routingServices(app);
-
-
 healInterval();
 
 httpServer.listen(1111, () => {

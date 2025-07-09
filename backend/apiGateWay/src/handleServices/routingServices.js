@@ -52,7 +52,6 @@ const routingServices = (app) => {
             },
         }));
 
-        // WebSocket (nếu có)
         app.use(`/${serviceName}/api/auth`, createProxyMiddleware({ // add login valid 
             changeOrigin: true,
             ws: true,

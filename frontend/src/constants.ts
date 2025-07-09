@@ -119,3 +119,6 @@ export const categoriesItems = {
         './Assets/Top.003.glb'
     ]
 }
+
+
+export const envVars = import.meta.env

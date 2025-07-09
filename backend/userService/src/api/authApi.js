@@ -21,4 +21,4 @@ authApi.post("/getNewRefreshToken", authControler.getNewRefreshToken)
 
 
 
-module.exports = { authApi }
+module.exports = authApi

@@ -1,16 +1,14 @@
 {
-  "method": "POST",
-  "originalUrl": "/userService/api/login",
-  "forwardedTo": "http://localhost:8001/api/login",
+  "method": "GET",
+  "originalUrl": "/userService/api/user/getInforOwn",
+  "forwardedTo": "http://localhost:8001/api/user/getInforOwn",
   "headers": {
     "host": "localhost:1111",
     "connection": "keep-alive",
-    "content-length": "39",
     "sec-ch-ua-platform": "\"Windows\"",
-    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0",
     "accept": "application/json, text/plain, */*",
-    "sec-ch-ua": "\"Microsoft Edge\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
-    "content-type": "application/json",
+    "sec-ch-ua": "\"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"138\", \"Microsoft Edge\";v=\"138\"",
     "sec-ch-ua-mobile": "?0",
     "origin": "http://localhost:5173",
     "sec-fetch-site": "same-site",
@@ -18,7 +16,9 @@
     "sec-fetch-dest": "empty",
     "referer": "http://localhost:5173/",
     "accept-encoding": "gzip, deflate, br, zstd",
-    "accept-language": "en-US,en;q=0.9,vi;q=0.8",
-    "cookie": "pma_lang=en; pmaUser-1=ZP%2BHoYCvPjIRKa9ORnSQEXqVNwYSx1QoY0CxOCMKm%2Fs9%2B3Bvf5%2BbxnNMy3U%3D"
+    "accept-language": "en-US,en;q=0.9",
+    "cookie": "accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsIm5pY2tOYW1lIjoiQWRtaW4iLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE3NTIwMzczMDksImV4cCI6MTc1MjEyMzcwOX0.KiBBmBUw_xlZZg2M9lD125DC9FB_XVFrRy46CvkptLY",
+    "if-none-match": "W/\"1fb-zaeZ1p9VmVMSE8GBmWVHfdfBqMU\"",
+    "X-decode": "{\"userId\":2,\"nickName\":\"Admin\",\"isAdmin\":true,\"iat\":1752037309,\"exp\":1752123709}"
   }
 }

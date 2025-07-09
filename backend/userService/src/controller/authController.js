@@ -55,7 +55,45 @@ const login = async (req, res) => {
 }
 
 const register = async (req, res) => {
+    try {
+        const { username, password, nickName } = req.body
 
+        if (!username || !password || !nickName) {
+            return res.status(400).json({
+                message: "missing data!"
+            })
+        }
+
+        let hashedPass = commonHelper.md5(password)
+
+        let findedUser = await Models.Users.findOne({
+            where: {
+                username
+            }
+        })
+
+        if (findedUser) {
+            return res.status(400).json({
+                message: "username already exist!"
+            })
+        }
+
+        let newUser = await Models.Users.create({
+            username,
+            password: hashedPass,
+            nickName
+        })
+
+        return res.status(200).json({
+            message: "ok",
+            userData: newUser
+        })
+    } catch (error) {
+        console.log("have wrong when register : ", error)
+        res.status(500).json({
+            message: "have wrong!"
+        })
+    }
 }
 
 const getNewAccesToken = async (req, res) => {
