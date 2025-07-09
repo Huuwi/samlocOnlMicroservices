@@ -17,8 +17,8 @@
     "referer": "http://localhost:5173/",
     "accept-encoding": "gzip, deflate, br, zstd",
     "accept-language": "en-US,en;q=0.9,vi;q=0.8",
-    "cookie": "accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5pY2tOYW1lIjoiUGxheWVyIE9uZSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE3NTIwNDUzNTIsImV4cCI6MTc1MjEzMTc1Mn0.RAY9XG30gHJQUkKk8o6PU5MW3NUaok3nFc82S9InZgo",
-    "if-none-match": "W/\"1fd-6WK6XuhGvURBJDZWlivm4UK60H0\"",
-    "X-decode": "{\"userId\":1,\"nickName\":\"Player One\",\"isAdmin\":false,\"iat\":1752045352,\"exp\":1752131752}"
+    "cookie": "accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsIm5pY2tOYW1lIjoidXNlcjQiLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNzUyMDU0MDAwLCJleHAiOjE3NTIxNDA0MDB9.Mx5D7pbjl8G3yRNUL0U9CLIZsFo1V81tHVs-j3O448s",
+    "if-none-match": "W/\"221-5sAwffmr68PADQzNd9qDTE8Nf+U\"",
+    "X-decode": "{\"userId\":5,\"nickName\":\"user4\",\"isAdmin\":false,\"iat\":1752054000,\"exp\":1752140400}"
   }
 }

@@ -1,7 +1,7 @@
 const Models = require("../modelORMs/index")
 const commonHelper = require("../helper/commonHelper")
 const jwt = require('jsonwebtoken');
-
+const indexServices = require("../services/indexServices")
 
 const login = async (req, res) => {
     try {
@@ -78,19 +78,28 @@ const register = async (req, res) => {
             })
         }
 
-        let newUser = await Models.Users.create({
-            username,
-            password: hashedPass,
-            nickName
+        let newCustomItems = await indexServices.customItemService.createCustomItem({})
+        const newUser = await indexServices.userService.createUser({
+            username, password: hashedPass, nickName, customItemsId: newCustomItems.customItemsId
         })
+
+
+        const token = jwt.sign({
+            userId: newUser.userId,
+            nickName: newUser.nickName,
+            isAdmin: newUser.isAdmin
+        }, process.env.JWT_KEY, { expiresIn: 60 * 60 * 24 })
+
+        res.cookie("accessToken", token, {})
 
         return res.status(200).json({
             message: "ok",
-            userData: newUser
+            userData: newUser,
+            newCustomItems
         })
     } catch (error) {
         console.log("have wrong when register : ", error)
-        res.status(500).json({
+        return res.status(500).json({
             message: "have wrong!"
         })
     }

@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom"
-import { categoriesItems } from "../../../constants"
+import { categoriesItems, envVars } from "../../../constants"
 import { myStore } from "../../../store"
 import type { ItemType, CustomItems } from "../../../types"
+import axios from "axios"
 
 
 const SelectTable = () => {
@@ -15,6 +16,24 @@ const SelectTable = () => {
     const clickDownload = myStore((state) => { return state.clickDonwload })
 
     const navigate = useNavigate()
+
+    async function handleSaveClick() {
+        try {
+
+            for (let key of Object.keys(customItems)) {
+                customItems[key as keyof CustomItems] = customItems[key as keyof CustomItems]?.replace("./Assets/", "")
+            }
+            await axios.post(envVars.VITE_API_GATE_WAY_URL + "/userService/api/user/updateCustomItemsOwn", { customItems }, { withCredentials: true })
+            localStorage.setItem("customItems", JSON.stringify(customItems))
+
+
+        } catch (error) {
+            console.log(error);
+            alert("co loi khi save!")
+        }
+    }
+
+
 
     return (
         <div className="h-screen flex flex-col " style={{ gap: "50px", marginTop: "50px", alignItems: "center" }}>
@@ -70,7 +89,7 @@ const SelectTable = () => {
                 {/* buttons */}
                 <div className="flex" style={{ gap: "50px" }}>
 
-                    <button onClick={() => { localStorage.setItem("customItems", JSON.stringify(customItems)) }} style={{ height: "70px", width: "150px" }} className="rounded-lg bg-indigo-500 hover:bg-indigo-600 transition-colors duration-300 text-white font-medium px-4 py-3 pointer-events-auto">Save</button>
+                    <button onClick={handleSaveClick} style={{ height: "70px", width: "150px" }} className="rounded-lg bg-indigo-500 hover:bg-indigo-600 transition-colors duration-300 text-white font-medium px-4 py-3 pointer-events-auto">Save</button>
                     <button onClick={() => { clickDownload() }} style={{ height: "70px", width: "150px" }} className="rounded-lg bg-indigo-500 hover:bg-indigo-600 transition-colors duration-300 text-white font-medium px-4 py-3 pointer-events-auto">Download Character</button>
                     <button onClick={() => { navigate("/lobby") }} style={{ height: "70px", width: "150px" }} className="rounded-lg bg-indigo-500 hover:bg-indigo-600 transition-colors duration-300 text-white font-medium px-4 py-3 pointer-events-auto">Go to lobby</button>
 

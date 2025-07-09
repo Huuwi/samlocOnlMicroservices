@@ -13,14 +13,14 @@ const Lobby: React.FC = () => {
     let lobbySocket = sockets.socketLobby
 
     // Initialize socket connection
-    // useEffect(() => {
+    useEffect(() => {
 
-    //     lobbySocket.connect();
+        lobbySocket.connect();
 
-    //     return () => {
-    //         // sockets.disconnect();
-    //     };
-    // }, []);
+        return () => {
+            // sockets.disconnect();
+        };
+    }, []);
 
 
     return (

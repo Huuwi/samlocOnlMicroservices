@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import axios from "axios"
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
+    const navigate = useNavigate()
 
     async function fetchLogin() {
         const res = await axios.post(`${import.meta.env.VITE_API_GATE_WAY_URL}/userService/api/login`,
@@ -18,7 +20,6 @@ const LoginPage = () => {
             }
         )
         return res.data
-
     }
 
     const handleLogin = async () => {
@@ -94,6 +95,14 @@ const LoginPage = () => {
                     }}
                 >
                     Login
+                </button>
+                <button
+                    onClick={() => {
+                        navigate("/register");
+                    }}
+                    className="w-full py-3 mt-4 rounded-xl bg-gradient-to-r from-yellow-200 via-yellow-300 to-yellow-400 text-yellow-900 font-bold text-base tracking-wide shadow hover:from-yellow-300 hover:to-yellow-500 hover:scale-105 transition-all duration-300 border-2 border-yellow-200/60"
+                >
+                    Đăng ký tài khoản mới
                 </button>
             </div>
         </div>
