@@ -5,8 +5,7 @@ const { createServer } = require("http");
 const services = require("./src/handleServices/services");
 const { healInterval } = require("./src/handleServices/healServices");
 const { routingServices } = require("./src/handleServices/routingServices");
-const indexMiddleware = require("./src/middleware/index")
-const { createProxyMiddleware } = require('http-proxy-middleware');
+const configApiMiddleWare = require("./src/config/configMiddleware")
 
 const valueRobin = {};
 Object.keys(services).forEach((serviceName) => {
@@ -24,8 +23,7 @@ const httpServer = createServer(app);
 
 
 //midlleware
-app.use(indexMiddleware.authMiddleware.checkUserToken)
-
+configApiMiddleWare(app)
 
 //services
 routingServices(app);

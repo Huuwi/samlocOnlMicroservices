@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { envVars } from "../../../constants";
-import { User, Lock, Smile } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {

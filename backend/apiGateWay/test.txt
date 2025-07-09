@@ -16,9 +16,9 @@
     "sec-fetch-dest": "empty",
     "referer": "http://localhost:5173/",
     "accept-encoding": "gzip, deflate, br, zstd",
-    "accept-language": "en-US,en;q=0.9",
-    "cookie": "accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsIm5pY2tOYW1lIjoiQWRtaW4iLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE3NTIwMzczMDksImV4cCI6MTc1MjEyMzcwOX0.KiBBmBUw_xlZZg2M9lD125DC9FB_XVFrRy46CvkptLY",
-    "if-none-match": "W/\"1fb-zaeZ1p9VmVMSE8GBmWVHfdfBqMU\"",
-    "X-decode": "{\"userId\":2,\"nickName\":\"Admin\",\"isAdmin\":true,\"iat\":1752037309,\"exp\":1752123709}"
+    "accept-language": "en-US,en;q=0.9,vi;q=0.8",
+    "cookie": "accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5pY2tOYW1lIjoiUGxheWVyIE9uZSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE3NTIwNDUzNTIsImV4cCI6MTc1MjEzMTc1Mn0.RAY9XG30gHJQUkKk8o6PU5MW3NUaok3nFc82S9InZgo",
+    "if-none-match": "W/\"1fd-6WK6XuhGvURBJDZWlivm4UK60H0\"",
+    "X-decode": "{\"userId\":1,\"nickName\":\"Player One\",\"isAdmin\":false,\"iat\":1752045352,\"exp\":1752131752}"
   }
 }
