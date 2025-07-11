@@ -51,43 +51,41 @@ class SocketServer extends Server {
 
     constructor(httpServer, config = configSocketIo) {
         super(httpServer, configSocketIo)
-        let a = ""
+
+        //use middleware for all socket
         this.use((socket, next) => {
+            //get token from headers
             let cookie = parseCookie(socket.request.headers?.cookie)
-            // console.log(cookie);
-
             let accessToken = cookie?.accessToken
-
-            // console.log(accessToken);
-
 
             if (!accessToken) {
                 next(new Error("not found token"))
                 return
             }
-
+            //decode token
             let decodeAccessToken = jwt.verify(accessToken, process.env.JWT_ACCESS_KEY)
+            socket.decodeAccessToken = decodeAccessToken // add token decode
 
             next()
         })
 
+        //handle when socket connect
         this.on("connect", (socket) => {
             console.log(socket.id + " connected ");
-            socket.emit("hello", "hellllo");
-        });
+            const userMetaData = socket.decodeAccessToken
+            this.socketArr.set(userMetaData.userId, {
+                userMetaData,
+                position: [0, 0, 0],
+                socketId: socket.id,
+                socketPointer: socket,
+            })
 
-
-        this.on("disconnect", (socket) => {
-            console.log(socket.id + " disconnected ");
-
-            this.emit("hello", "hellllo")
 
             socket.on("disconnect", () => {
                 console.log(socket.id + " vua ngat ket noi");
+                this.socketArr.delete(userMetaData.userId)
             })
-
-        })
-
+        });
     }
 
 

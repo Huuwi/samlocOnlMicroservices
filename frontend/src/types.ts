@@ -27,6 +27,7 @@ export interface MixCharacterState {
 }
 
 
+
 export interface CustomItemsIgnore {
     Bottom?: string,
     Bow?: string,
@@ -56,3 +57,10 @@ export type CustomItemsFull = {
 }
 
 export type CustomItems = CustomItemsFull | CustomItemsIgnore
+
+
+export interface LobbyMovementState {
+    isRunning: Boolean
+    changeIsRunning: (value: Boolean) => void,
+    currentPostion: [number, number, number]
+}

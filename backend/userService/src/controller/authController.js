@@ -28,10 +28,14 @@ const login = async (req, res) => {
             })
         }
 
+        const customItems = await indexServices.customItemService.getCustomItemById(findedUser.customItemsId)
+
         const token = jwt.sign({
             userId: findedUser.userId,
             nickName: findedUser.nickName,
-            isAdmin: findedUser.isAdmin
+            isAdmin: findedUser.isAdmin,
+            rankPoint: findedUser.rankPoint,
+            customItems
         }, process.env.JWT_KEY, { expiresIn: 60 * 60 * 24 })
 
         res.cookie("accessToken", token, {})
@@ -87,15 +91,22 @@ const register = async (req, res) => {
         const token = jwt.sign({
             userId: newUser.userId,
             nickName: newUser.nickName,
-            isAdmin: newUser.isAdmin
-        }, process.env.JWT_KEY, { expiresIn: 60 * 60 * 24 })
+            isAdmin: newUser.isAdmin,
+            rankPoint: findedUser.rankPoint,
+            customItems: newCustomItems
+        }, process.env.JWT_KEY, { expiresIn: 60 * 60 * 24 * 7 })
 
         res.cookie("accessToken", token, {})
 
         return res.status(200).json({
             message: "ok",
             userData: newUser,
-            newCustomItems
+            customItems: newCustomItems,
+            refreshToken: jwt.sign({
+                userId: findedUser.userId,
+                nickName: findedUser.nickName,
+                isAdmin: findedUser.isAdmin
+            }, process.env.JWT_KEY, { expiresIn: 60 * 60 * 24 * 7 })
         })
     } catch (error) {
         console.log("have wrong when register : ", error)

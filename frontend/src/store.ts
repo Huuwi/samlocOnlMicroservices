@@ -1,6 +1,6 @@
 import { create, type StateCreator } from 'zustand'
 import { categoriesItems } from './constants'
-import type { MixCharacterState, CustomItems, Item, ItemType, CustomItemsFull } from './types'
+import type { MixCharacterState, LobbyMovementState, CustomItems, Item, ItemType, CustomItemsFull } from './types'
 
 function getCustomItemLocal(): CustomItems | null {
     const raw = localStorage.getItem("customItems");
@@ -82,8 +82,25 @@ const createMixCharacterSlice: StateCreator<MixCharacterState> = (set, get, stor
     }
 })
 
-type Store = MixCharacterState
+type Store = MixCharacterState & LobbyMovementState
+
+
+const createLobbyMovementSlice: StateCreator<LobbyMovementState> = (set, get, store) => ({
+    isRunning: false,
+    changeIsRunning: (value) => {
+        set((state) => ({
+            isRunning: value
+        }))
+    },
+    currentPostion: [0, 0, 0],
+    changeCurrentPostion: (postion: [number, number, number]) => {
+        set(() => ({
+            currentPostion: postion
+        }))
+    }
+})
 
 export const myStore = create<Store>((set, get, store) => ({
     ...createMixCharacterSlice(set, get, store),
+    ...createLobbyMovementSlice(set, get, store)
 }))

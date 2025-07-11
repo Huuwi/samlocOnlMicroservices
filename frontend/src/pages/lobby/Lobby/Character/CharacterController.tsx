@@ -1,22 +1,17 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import type { Group } from "three";
 import * as THREE from "three";
 import MainCharacter from "../../CharacterMix/MainCharacter";
 import type SocketClient from "../../../../socketIo/SocketClient";
+import Helper from "../../../../helper/Helper";
+import { mapZones } from "../../../../constants";
+import { myStore } from "../../../../store";
 
-type Vec2 = [number, number]; // x, y
-type BoundingRec = [number, number, number, number]; // [minX, maxX, minY, maxY]
+type V2 = [number, number]
+type Rect2 = [Function, Function, Function, Function]
 
 
-function checkInsideBoundingRec(point: Vec2, boundingRec: BoundingRec): boolean {
-    let [x, y] = point;
-    let [minX, maxX, minY, maxY] = boundingRec;
-    if (x >= minX && x <= maxX && y >= minY && y <= maxY) {
-        return true;
-    }
-    return false
-}
 
 type PropsChaController = {
     lobbySocket: SocketClient
@@ -29,7 +24,6 @@ const CharacterController = (props: PropsChaController) => {
 
     const keysPressed = useRef<{ [key: string]: boolean }>({})
 
-
     const isMouseDown = useRef(false);
     const lastMousePos = useRef({ x: 0, y: 0 });
 
@@ -41,6 +35,24 @@ const CharacterController = (props: PropsChaController) => {
 
     const min = new THREE.Vector3(-182.875, -0.7867861915018802, -63.65117333491793)
     const max = new THREE.Vector3(177.6934131730098, 122.82035142976031, 303.6165253987978)
+
+    const changeIsRunning = useMemo(() => {
+        return myStore.getState().changeIsRunning
+    }, [])
+
+    const KeyPressedType = ["w", "a", "s", "d"];
+
+
+    const rects = useMemo(() => {
+        return mapZones.map((zone) => {
+            return {
+                zoneName: zone.zoneName,
+                rect: Helper.createRectFromFourPoints(zone.point1, zone.point2, zone.point3, zone.point4)
+            }
+        })
+    }, [])
+
+
 
     // Xoay camera bằng chuột
     useEffect(() => {
@@ -108,11 +120,19 @@ const CharacterController = (props: PropsChaController) => {
     // Điều khiển bằng WASD
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            keysPressed.current[e.key.toLowerCase()] = true
+            const keyPressed = e.key.toLocaleLowerCase()
+            if (KeyPressedType.includes(keyPressed)) {
+                changeIsRunning(true)
+                keysPressed.current[keyPressed] = true
+            }
         }
 
         const handleKeyUp = (e: KeyboardEvent) => {
-            keysPressed.current[e.key.toLowerCase()] = false
+            const keyPressed = e.key.toLocaleLowerCase()
+            if (KeyPressedType.includes(keyPressed)) {
+                keysPressed.current[keyPressed] = false
+                changeIsRunning(false)
+            }
         }
 
         window.addEventListener('keydown', handleKeyDown)
@@ -142,6 +162,7 @@ const CharacterController = (props: PropsChaController) => {
             const moveSpeed = 30 * delta
             const direction = new THREE.Vector3()
 
+
             if (keysPressed.current['w']) direction.z += 1
             if (keysPressed.current['s']) direction.z -= 1
             if (keysPressed.current['a']) direction.x += 1
@@ -152,21 +173,41 @@ const CharacterController = (props: PropsChaController) => {
             );
             direction.applyQuaternion(yawQuat);
             direction.normalize().multiplyScalar(moveSpeed);
-            mainCharRef.current.position.add(direction);
 
+
+            //check zone trigger
+            //  Tính vị trí sau khi di chuyển
+            const futurePos = mainCharRef.current.position.clone().add(direction)
+
+            //  Kiểm tra vùng cấm
+            let inBlockedZone = false
+            rects.forEach((rect) => {
+                if (Helper.checkPointInRect(rect.rect as Rect2, [futurePos.x, futurePos.z])) {
+                    console.log(`Vào vùng cấm: ${rect.zoneName}`)
+                    //xu ly hien popup o day
+
+                    inBlockedZone = true
+                }
+            })
+
+
+            if (!inBlockedZone) {
+                mainCharRef.current.position.add(direction)
+            } else {
+                console.log("Không thể di chuyển vào vùng này")
+            }
             // Clamp từng trục:
             const pos = mainCharRef.current.position;
             pos.x = THREE.MathUtils.clamp(pos.x, min.x + 2, max.x - 2);
             pos.y = THREE.MathUtils.clamp(pos.y, min.y, max.y);
             pos.z = THREE.MathUtils.clamp(pos.z, min.z + 2, max.z - 2);
 
-            // console.log('Player position:', pos);
+            // console.log('Player position:', {
+            //     x: pos.x,
+            //     z: pos.z,
+            //     y: pos.y
+            // });
 
-            //check zone trigger
-            if (checkInsideBoundingRec([pos.x, pos.z], [-10, 40, 230, 250])) {
-                console.log("hello");
-
-            }
 
         }
     });

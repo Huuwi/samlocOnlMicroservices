@@ -120,5 +120,23 @@ export const categoriesItems = {
     ]
 }
 
-
 export const envVars = import.meta.env
+
+type V2 = [number, number]
+interface Zone {
+    zoneName: string,
+    point1: V2,
+    point2: V2,
+    point3: V2,
+    point4: V2
+}
+
+export const mapZones: Zone[] = [
+    {
+        zoneName: "cardTable",
+        point1: [8.1, 220.5],
+        point2: [40.3, 246.3],
+        point3: [29.1, 271.2],
+        point4: [-7.7, 254.6]
+    }
+]

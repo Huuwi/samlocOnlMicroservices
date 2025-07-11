@@ -7,6 +7,7 @@ import Room from "./Room/Room";
 import CharacterController from "./Character/CharacterController";
 import { AxesHelper } from "three";
 import sockets from "../../../socketIo/sockets";
+import { myStore } from "../../../store";
 
 const Lobby: React.FC = () => {
 
@@ -15,7 +16,8 @@ const Lobby: React.FC = () => {
     // Initialize socket connection
     useEffect(() => {
 
-        lobbySocket.connect();
+        let socketConnected = lobbySocket.connect();
+
 
         return () => {
             // sockets.disconnect();
@@ -38,7 +40,9 @@ const Lobby: React.FC = () => {
                 </button>
             </div>
 
-            {/* 3D Canvas */}
+            {/* ------------------------------------------------------------------- */}
+
+            {/* 3D layer */}
             <Canvas
                 camera={{ position: [3, 3, 5], fov: 50 }}
                 className="bg-blue-300 z-0"
