@@ -97,7 +97,10 @@ const createLobbyMovementSlice: StateCreator<LobbyMovementState> = (set, get, st
         set(() => ({
             currentPostion: postion
         }))
-    }
+    },
+
+    // currentState: 
+
 })
 
 export const myStore = create<Store>((set, get, store) => ({

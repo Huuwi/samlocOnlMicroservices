@@ -8,6 +8,7 @@ import CharacterController from "./Character/CharacterController";
 import { AxesHelper } from "three";
 import sockets from "../../../socketIo/sockets";
 import { myStore } from "../../../store";
+import { envVars } from "../../../constants";
 
 const Lobby: React.FC = () => {
 
@@ -17,10 +18,19 @@ const Lobby: React.FC = () => {
     useEffect(() => {
 
         let socketConnected = lobbySocket.connect();
+        const fps = envVars.VITE_FPS
+        const ms = 1000 / fps
 
+        const fpsEmitItv = setInterval(() => {
+            const isRunning = myStore.getState().isRunning
+            if (!isRunning) return
+            socketConnected.emit("movement",)
+
+        }, ms);
 
         return () => {
             // sockets.disconnect();
+            clearInterval(fpsEmitItv)
         };
     }, []);
 

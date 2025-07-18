@@ -2,7 +2,6 @@ const { Server } = require("socket.io");
 const jwt = require("jsonwebtoken")
 
 require("dotenv").config({ path: "./.env" })
-const authMiddleware = require("../middleware/authMiddleWare")
 
 function parseCookie(cookieString) {
 
@@ -46,8 +45,9 @@ module.exports = { configSocketIo }
 
 
 class SocketServer extends Server {
-    socketArr = new Map()
+    socketMap = new Map()
     io
+    inforMetaDataMap = new Map() // emit
 
     constructor(httpServer, config = configSocketIo) {
         super(httpServer, configSocketIo)
@@ -73,17 +73,17 @@ class SocketServer extends Server {
         this.on("connect", (socket) => {
             console.log(socket.id + " connected ");
             const userMetaData = socket.decodeAccessToken
-            this.socketArr.set(userMetaData.userId, {
+            this.socketMap.set(userMetaData.userId, socket)
+            this.inforMetaDataMap.set(userMetaData.userId, {
                 userMetaData,
                 position: [0, 0, 0],
                 socketId: socket.id,
-                socketPointer: socket,
             })
-
 
             socket.on("disconnect", () => {
                 console.log(socket.id + " vua ngat ket noi");
-                this.socketArr.delete(userMetaData.userId)
+                this.socketMap.delete(userMetaData.userId)
+                this.inforMetaDataMap.delete(userMetaData.userId)
             })
         });
     }

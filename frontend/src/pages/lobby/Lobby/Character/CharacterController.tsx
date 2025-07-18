@@ -36,9 +36,16 @@ const CharacterController = (props: PropsChaController) => {
     const min = new THREE.Vector3(-182.875, -0.7867861915018802, -63.65117333491793)
     const max = new THREE.Vector3(177.6934131730098, 122.82035142976031, 303.6165253987978)
 
+    const lastTransform = useRef({
+        position: new THREE.Vector3(),
+        rotationY: 0
+    });
+
+
     const changeIsRunning = useMemo(() => {
         return myStore.getState().changeIsRunning
     }, [])
+
 
     const KeyPressedType = ["w", "a", "s", "d"];
 
@@ -81,8 +88,8 @@ const CharacterController = (props: PropsChaController) => {
             accumulatedPitch.current += -deltaY * 0.002;
 
             // Giới hạn góc nhìn lên/xuống (pitch)
-            const maxPitch = Math.PI / 2 - 0.5;  // ~85 độ
-            const minPitch = -Math.PI / 2 + 2; // ~-85 độ
+            const maxPitch = Math.PI / 2 - 0.5;
+            const minPitch = -Math.PI / 2 + 2;
             accumulatedPitch.current = Math.max(minPitch, Math.min(maxPitch, accumulatedPitch.current));
 
             // (Tùy chọn) Giới hạn yaw trong khoảng [-π, π]
@@ -183,7 +190,8 @@ const CharacterController = (props: PropsChaController) => {
             let inBlockedZone = false
             rects.forEach((rect) => {
                 if (Helper.checkPointInRect(rect.rect as Rect2, [futurePos.x, futurePos.z])) {
-                    console.log(`Vào vùng cấm: ${rect.zoneName}`)
+                    alert(`Vào vùng cấm: ${rect.zoneName}`)
+                    keysPressed.current = {}
                     //xu ly hien popup o day
 
                     inBlockedZone = true
@@ -202,11 +210,36 @@ const CharacterController = (props: PropsChaController) => {
             pos.y = THREE.MathUtils.clamp(pos.y, min.y, max.y);
             pos.z = THREE.MathUtils.clamp(pos.z, min.z + 2, max.z - 2);
 
-            // console.log('Player position:', {
-            //     x: pos.x,
-            //     z: pos.z,
-            //     y: pos.y
-            // });
+
+            const currentPos = mainCharRef.current.position;
+            const currentRotY = mainCharRef.current.rotation.y;
+
+            // Tính delta vị trí
+            const deltaPosition = new THREE.Vector3().subVectors(currentPos, lastTransform.current.position);
+
+            // Tính delta góc quay
+            const deltaRotationY = currentRotY - lastTransform.current.rotationY;
+
+            // Kiểm tra có thay đổi đủ lớn để emit (tránh spam micro movement)
+            const hasMoved = deltaPosition.lengthSq() > 0.0001;  // di chuyển ít nhất một chút
+            const hasRotated = Math.abs(deltaRotationY) > 0.001;
+
+            if (hasMoved || hasRotated) {
+                console.log({
+                    deltaPosition: {
+                        x: deltaPosition.x,
+                        y: deltaPosition.y,
+                        z: deltaPosition.z
+                    },
+                    deltaRotationY: deltaRotationY
+                })
+
+                // Cập nhật lại transform
+                lastTransform.current.position.copy(currentPos);
+                lastTransform.current.rotationY = currentRotY;
+            }
+
+
 
 
         }

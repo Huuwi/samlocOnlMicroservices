@@ -2,13 +2,10 @@ import React, { Suspense, useEffect, useRef } from 'react'
 import { SkinnedMesh, Group } from 'three'
 import { useArmature } from '../../CharacterMix/MainSkeleton'
 import Cus from './Cus'
-import type { CustomItems, ItemType } from "../../../../types"
+import type { CustomItems } from "../../../../types"
 import * as THREE from 'three'
-import { useFrame } from '@react-three/fiber'
 import {
     Billboard,
-    PerspectiveCamera,
-    PointerLockControls,
     Text3D,
     useAnimations,
     useFBX,

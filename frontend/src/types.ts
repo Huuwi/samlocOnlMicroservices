@@ -62,5 +62,6 @@ export type CustomItems = CustomItemsFull | CustomItemsIgnore
 export interface LobbyMovementState {
     isRunning: Boolean
     changeIsRunning: (value: Boolean) => void,
-    currentPostion: [number, number, number]
+    currentPostion: [number, number, number],
+    changeCurrentPostion(value: [number, number, number]): void
 }
